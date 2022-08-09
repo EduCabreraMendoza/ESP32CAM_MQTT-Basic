@@ -18,12 +18,12 @@
 #include <PubSubClient.h> //Biblioteca para conexion MQTT
 
 //Datos de WiFi
-const char* ssid = "AXTEL XTREMO-18D6";  // Aquí debes poner el nombre de tu red
-const char* password = "038C18D6";  // Aquí debes poner la contraseña de tu red
+const char* ssid = "gfbfdce2ascgDc_2.4Gnormal";  // Aquí debes poner el nombre de tu red
+const char* password = "HrjDNs63jsvu0";  // Aquí debes poner la contraseña de tu red
 
 //Datos del broker MQTT
-const char* mqtt_server = "192.168.15.33"; // Si estas en una red local, coloca la IP asignada, en caso contrario, coloca la IP publica
-IPAddress server(192,168,15,33);
+const char* mqtt_server = "192.168.100.131"; // Si estas en una red local, coloca la IP asignada, en caso contrario, coloca la IP publica
+IPAddress server(192,168,100,131);
 
 // Objetos
 WiFiClient espClient; // Este objeto maneja los datos de conexion WiFi
@@ -98,7 +98,7 @@ void loop() {
     dtostrf(data, 1, 2, dataString);  // Esta es una función nativa de leguaje AVR que convierte un arreglo de caracteres en una variable String
     Serial.print("Contador: "); // Se imprime en monitor solo para poder visualizar que el evento sucede
     Serial.println(dataString);
-    client.publish("codigoIoT/ejemplos/MQTT", dataString); // Esta es la función que envía los datos por MQTT, especifica el tema y el valor
+    client.publish("codigoIoT/ejemplo/MQTT", dataString); // Esta es la función que envía los datos por MQTT, especifica el tema y el valor
   }// fin del if (timeNow - timeLast > wait)
 }// fin del void loop ()
 
@@ -126,17 +126,17 @@ void callback(char* topic, byte* message, unsigned int length) {
   // En esta parte puedes agregar las funciones que requieras para actuar segun lo necesites al recibir un mensaje MQTT
 
   // Ejemplo, en caso de recibir el mensaje true - false, se cambiará el estado del led soldado en la placa.
-  // El ESP323CAM está suscrito al tema esp/output
-  if (String(topic) == "esp32/output") {  // En caso de recibirse mensaje en el tema esp32/output
+  // El ESP323CAM está suscrito al tema codigoIoT/ejemplo/MQTTIN
+  if (String(topic) == "codigoIoT/ejemplo/MQTTIN") {  // En caso de recibirse mensaje en el tema codigoIoT/ejemplo/MQTTIN
     if(messageTemp == "true"){
       Serial.println("Led encendido");
       digitalWrite(flashLedPin, HIGH);
-    }// fin del if (String(topic) == "esp32/output")
+    }// fin del if (String(topic) == "codigoIoT/ejemplo/MQTTIN")
     else if(messageTemp == "false"){
       Serial.println("Led apagado");
       digitalWrite(flashLedPin, LOW);
     }// fin del else if(messageTemp == "false")
-  }// fin del if (String(topic) == "esp32/output")
+  }// fin del if (String(topic) == "codigoIoT/ejemplo/MQTTIN")
 }// fin del void callback
 
 // Función para reconectarse
@@ -147,7 +147,7 @@ void reconnect() {
     // Intentar reconexión
     if (client.connect("ESP32CAMClient")) { //Pregunta por el resultado del intento de conexión
       Serial.println("Conectado");
-      client.subscribe("esp32/output"); // Esta función realiza la suscripción al tema
+      client.subscribe("codigoIoT/ejemplo/MQTTIN"); // Esta función realiza la suscripción al tema
     }// fin del  if (client.connect("ESP32CAMClient"))
     else {  //en caso de que la conexión no se logre
       Serial.print("Conexion fallida, Error rc=");
