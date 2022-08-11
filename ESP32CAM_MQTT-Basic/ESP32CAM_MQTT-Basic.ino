@@ -2,6 +2,7 @@
  * Conexión básica por MQTT del NodeMCU
  * por: Hugo Escalpelo
  * Fecha: 28 de julio de 2021
+ * Actualizado por: Eduardo Cabrera
  * 
  * Este programa envía datos  por Internet a través del protocolo MQTT. Para poder
  * comprobar el funcionamiento de este programa, es necesario conectarse a un broker
